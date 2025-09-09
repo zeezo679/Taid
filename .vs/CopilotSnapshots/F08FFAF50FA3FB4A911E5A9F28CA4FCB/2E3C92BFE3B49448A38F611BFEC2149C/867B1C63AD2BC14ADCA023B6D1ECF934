@@ -1,0 +1,50 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark shadow-sm mb-4">
+    <div class="container">
+        <!-- Brand -->
+        <a class="navbar-brand fw-bold d-flex align-items-center"
+           asp-area="" asp-controller="Home" asp-action="Index">
+            <i data-feather="layers" class="me-2 text-primary" style="width: 24px; height: 24px;"></i>
+            Demo
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Desktop Nav -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center"
+                       asp-area="" asp-controller="Home" asp-action="Index">
+                        <i data-feather="home" class="me-2" style="width: 16px; height: 16px;"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center"
+                       asp-area="" asp-controller="Instructor" asp-action="Index">
+                        <i data-feather="users" class="me-2" style="width: 16px; height: 16px;"></i>
+                        Instructors
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center"
+                       asp-area="" asp-controller="Course" asp-action="Index">
+                        <i data-feather="book-open" class="me-2" style="width: 16px; height: 16px;"></i>
+                        Courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center"
+                       asp-area="" asp-controller="Home" asp-action="Privacy">
+                        <i data-feather="shield" class="me-2" style="width: 16px; height: 16px;"></i>
+                        Privacy
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

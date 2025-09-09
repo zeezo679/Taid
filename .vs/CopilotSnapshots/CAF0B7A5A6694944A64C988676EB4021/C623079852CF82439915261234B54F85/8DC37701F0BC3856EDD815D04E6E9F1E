@@ -1,0 +1,57 @@
+﻿@using Demo.Models.Entities
+@model List<Instructor>
+
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+    <table class="w-full text-sm text-left rtl:text-right">
+        <thead class="text-xs uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Image
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Salary
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Address
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <a>Edit</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+           @foreach(var instructor in @Model)
+            {
+                <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 ">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @instructor.Name
+                    </th>
+                    <td class="px-6 py-4">
+                        <img src="~/images/@instructor.Image"/>
+                    </td>
+                    <td class="px-6 py-4">
+                        @instructor.Salary
+                    </td>
+                    <td class="px-6 py-4">
+                        @instructor.Address
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <a asp-action="edit" asp-controller="instructor" asp-route-id="@instructor.Id" class="font-medium text-blue-600 hover:underline">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="mt-5">
+    <button href="instructor/addinstructor" type="button" class="cursor-pointer text-gray-900 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+        <a asp-action="addinstructor" asp-controller="instructor">Add Instructor</a>
+    </button>
+</div>
+
+
+

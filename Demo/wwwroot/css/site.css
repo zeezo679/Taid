@@ -1,0 +1,1003 @@
+/* Custom CSS for Demo Application - Dark Theme */
+
+/* Dark Theme Root Variables */
+:root {
+    --dark-primary: #1a1a1a;
+    --dark-secondary: #2d2d2d;
+    --dark-accent: #404040;
+    --dark-surface: #1e1e1e;
+    --dark-card: #252525;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --text-muted: #888888;
+    --accent-blue: #0ea5e9;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --shadow-dark: rgba(0, 0, 0, 0.3);
+    --shadow-darker: rgba(0, 0, 0, 0.5);
+}
+
+/* Page Transition Animations - ORIGINAL DURATIONS */
+@keyframes pageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pageSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes pageScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Page Transition Classes - RESTORED ORIGINAL DURATIONS */
+.page-transition {
+    animation: pageFadeIn 0.5s ease-out forwards;
+}
+
+.page-slide-in {
+    animation: pageSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.page-slide-out {
+    animation: pageSlideOut 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+}
+
+.page-scale-in {
+    animation: pageScaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Background Gradients */
+.bg-gradient-primary-to-secondary {
+    background: linear-gradient(135deg, var(--accent-blue), #0284c7) !important;
+}
+
+/* Smooth Navigation Link Transitions */
+.nav-link {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), #0284c7);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+    width: 80%;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+/* Loading Animation for Page Transitions - ORIGINAL */
+.page-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.page-loading.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.page-loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--dark-accent);
+    border-top: 4px solid var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Content Wrapper for Transitions - ORIGINAL */
+main[role="main"] {
+    min-height: calc(100vh - 200px);
+    opacity: 0;
+    animation: pageFadeIn 0.6s ease-out 0.1s forwards;
+}
+
+/* Staggered Animation for Cards - ORIGINAL */
+.stagger-animation {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.stagger-animation:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animation:nth-child(2) { animation-delay: 0.2s; }
+.stagger-animation:nth-child(3) { animation-delay: 0.3s; }
+.stagger-animation:nth-child(4) { animation-delay: 0.4s; }
+.stagger-animation:nth-child(5) { animation-delay: 0.5s; }
+.stagger-animation:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced Button Hover Animations */
+.btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Enhanced Navigation Styles */
+.smooth-nav {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.smooth-nav::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), #0284c7);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(-50%);
+    border-radius: 1px;
+}
+
+.smooth-nav:hover::after,
+.smooth-nav.active::after {
+    width: 80%;
+}
+
+.smooth-nav:hover {
+    transform: translateY(-2px);
+    color: var(--accent-blue) !important;
+}
+
+.smooth-nav i {
+    transition: transform 0.2s ease;
+}
+
+.smooth-nav:hover i {
+    transform: scale(1.1);
+}
+
+/* Mobile menu enhancements */
+@media (max-width: 991.98px) {
+    .smooth-nav::after {
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        transform: translateX(0);
+    }
+
+    .smooth-nav:hover::after,
+    .smooth-nav.active::after {
+        width: 100%;
+    }
+
+    .collapse.navbar-collapse {
+        background: var(--dark-card);
+        border-radius: 8px;
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 1px solid var(--dark-accent);
+    }
+}
+
+/* User greeting enhancement */
+.nav-item span {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Force Dark Theme Application */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--dark-accent) var(--dark-primary);
+}
+
+/* Global Dark Theme - Force Override */
+html {
+    background-color: var(--dark-primary) !important;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--dark-primary) !important;
+    color: var(--text-primary) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    overflow-x: hidden;
+}
+
+/* Container overrides */
+.container,
+.container-fluid {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+/* Override Bootstrap default backgrounds */
+.bg-white {
+    background-color: var(--dark-card) !important;
+}
+
+.bg-light {
+    background-color: var(--dark-secondary) !important;
+}
+
+.text-dark {
+    color: var(--text-primary) !important;
+}
+
+.text-light {
+    color: var(--text-secondary) !important;
+}
+
+/* Custom Button Styles - Dark Theme */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-blue), #0284c7) !important;
+    border: none !important;
+    transition: all 0.3s ease;
+    color: white !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
+    color: white !important;
+    border-color: transparent !important;
+}
+
+.btn-outline-primary {
+    border-color: var(--accent-blue) !important;
+    color: var(--accent-blue) !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+    background-color: var(--accent-blue) !important;
+    border-color: var(--accent-blue) !important;
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--text-secondary) !important;
+    color: var(--text-secondary) !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:active {
+    background-color: var(--dark-accent) !important;
+    border-color: var(--text-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+.btn-secondary {
+    background-color: var(--dark-accent) !important;
+    border-color: var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Custom Card Styles */
+.card {
+    background-color: var(--dark-card) !important;
+    border: 1px solid var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 15px var(--shadow-dark) !important;
+}
+
+.card-header {
+    background-color: var(--dark-secondary) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+}
+
+.card-body {
+    background-color: var(--dark-card) !important;
+    color: var(--text-primary) !important;
+}
+
+.card-footer {
+    background-color: var(--dark-secondary) !important;
+    border-top: 1px solid var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Override Bootstrap bg-primary for dark theme */
+.bg-primary {
+    background: linear-gradient(135deg, var(--accent-blue), #0284c7) !important;
+}
+
+.bg-secondary {
+    background-color: var(--dark-secondary) !important;
+}
+
+/* Text Colors - Dark Theme */
+.text-primary {
+    color: var(--accent-blue) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+/* Form Enhancements - Dark Theme */
+.form-control,
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: var(--dark-surface) !important;
+    border: 2px solid var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    background-color: var(--dark-surface) !important;
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.25) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1;
+}
+
+.form-select,
+.form-select:disabled {
+    background-color: var(--dark-surface) !important;
+    border: 2px solid var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e") !important;
+}
+
+.form-select:focus {
+    background-color: var(--dark-surface) !important;
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.25) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-select option {
+    background-color: var(--dark-surface) !important;
+    color: var(--text-primary) !important;
+}
+
+.input-group-text {
+    background-color: var(--dark-accent) !important;
+    border-color: var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-label {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    position: relative;
+    top: 0;
+}
+
+.form-text {
+    color: var(--text-muted) !important;
+}
+
+/* Navbar - Dark Theme */
+.navbar {
+    background-color: var(--dark-card) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    color: var(--text-primary) !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+    color: var(--accent-blue) !important;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--accent-blue) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25) !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Footer - Dark Theme */
+footer {
+    background-color: var(--dark-card) !important;
+    border-top: 1px solid var(--dark-accent) !important;
+    color: var(--text-secondary) !important;
+    margin-top: auto;
+}
+
+footer a {
+    color: var(--text-secondary) !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--accent-blue) !important;
+}
+
+/* Alert Enhancements - Dark Theme */
+.alert {
+    border: none !important;
+    border-radius: 10px;
+    animation: slideDown 0.4s ease-out;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.3)) !important;
+    color: var(--accent-green) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.3)) !important;
+    color: var(--accent-red) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(14, 165, 233, 0.3)) !important;
+    color: var(--accent-blue) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+}
+
+/* Badge Enhancements - Dark Theme */
+.badge {
+    font-weight: 500;
+}
+
+.bg-light.text-dark,
+.badge.bg-light {
+    background-color: var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Table - Dark Theme */
+.table {
+    color: var(--text-primary) !important;
+    --bs-table-bg: var(--dark-card);
+}
+
+.table-light > :not(caption) > * > * {
+    background-color: var(--dark-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: var(--dark-accent) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Spinner - Dark Theme */
+.spinner-border {
+    color: var(--accent-blue) !important;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--dark-accent);
+    border-top: 2px solid var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Border overrides */
+.border-top {
+    border-top: 1px solid var(--dark-accent) !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--dark-accent) !important;
+}
+
+.border {
+    border: 1px solid var(--dark-accent) !important;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 500px;
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-down {
+    animation: slideDown 0.4s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+    animation: fadeInScale 0.5s ease-out forwards;
+}
+
+/* Additional styles for the privacy page */
+.bg-success-subtle {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+.text-success-emphasis {
+    color: #10b981 !important;
+}
+
+.bg-danger-subtle {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+.text-danger-emphasis {
+    color: #ef4444 !important;
+}
+
+.bg-info-subtle {
+    background-color: rgba(14, 165, 233, 0.15) !important;
+}
+
+.text-info-emphasis {
+    color: #0ea5e9 !important;
+}
+
+.bg-primary-subtle {
+    background-color: rgba(14, 165, 233, 0.15) !important;
+}
+
+.text-primary-emphasis {
+    color: #0ea5e9 !important;
+}
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+.display-6 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+/* Login Page Specific Styles - ORIGINAL */
+.animate-fade-in-scale {
+    animation: fadeInScale 0.6s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Enhanced form floating labels - positioned above inputs */
+.form-floating {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-floating > label {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin-bottom: 8px !important;
+    color: var(--text-primary) !important;
+    font-weight: 500;
+    transform: none !important;
+    font-size: 1rem !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+}
+
+.form-floating > label::after,
+.form-floating > label::before,
+.form-floating > .form-control-plaintext ~ label::after,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-select ~ label::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-control-plaintext {
+    padding: 0.75rem 0.75rem !important;
+    height: calc(3.5rem + 2px) !important;
+    line-height: 1.25 !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+}
+
+.form-floating input:focus {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.25) !important;
+}
+
+/* Custom checkbox styling */
+.form-check-input:checked {
+    background-color: var(--accent-blue) !important;
+    border-color: var(--accent-blue) !important;
+}
+
+.form-check-input:focus {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.25) !important;
+}
+
+/* Button hover effects for login */
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
+}
+
+.btn-outline-primary:hover {
+    transform: translateY(-1px);
+}
+
+/* Login card hover effect */
+.login-bg-pattern {
+    z-index: -1;
+    opacity: 0.05;
+}
+
+/* Background pattern animation */
+.login-bg-pattern div {
+    animation: backgroundPulse 20s infinite alternate;
+}
+
+@keyframes backgroundPulse {
+    from { opacity: 0.02; }
+    to { opacity: 0.08; }
+}
+
+/* Mobile responsiveness for login */
+@media (max-width: 576px) {
+    .card-header {
+        padding: 2rem !important;
+    }
+    
+    .card-body {
+        padding: 2rem !important;
+    }
+    
+    .min-vh-100 {
+        min-height: auto !important;
+        padding: 2rem 0 !important;
+    }
+}
+
+/* Modal content styling (keeping existing styles) */
+
+/* Smooth Card Appearance Styles */
+#CourseDetails {
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    border: none !important;
+    padding: 0 !important;
+}
+
+#CourseDetails.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 600px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--dark-accent) !important;
+    padding: 1rem !important;
+}
+
+#CourseDetails.loading {
+    opacity: 0.7;
+    transform: scale(0.98);
+    border: 1px solid var(--dark-accent) !important;
+    padding: 1rem !important;
+}
+
+/* Modern Input Styles - Inspired by minimalist design */
+.modern-form {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.modern-input-group {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.modern-input {
+    font-size: 18px;
+    font-weight: 300;
+    border-radius: 2px;
+    margin: 0;
+    padding: 12px 0;
+    border: none;
+    width: 100%;
+    background: transparent;
+    color: var(--text-primary) !important;
+    border-bottom: 2px solid var(--dark-accent);
+    transition: border-color 0.3s ease, padding-top 0.2s ease;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.modern-input:focus,
+.modern-input:valid {
+    padding-top: 20px;
+    border-bottom-color: var(--accent-blue);
+}
+
+/* No need to hide label since it's now above the input */
+.modern-input:focus + .modern-label > span,
+.modern-input:not(:placeholder-shown) + .modern-label > span {
+    opacity: 1;
+    visibility: visible;
+    color: var(--text-primary);
+    transform: none;
+}
+
+/* Label is always visible */
+.modern-input:placeholder-shown:not(:focus) + .modern-label > span {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.modern-input:valid {
+    border-bottom-color: var(--accent-green);
+}
+
+.modern-input:invalid:not(:placeholder-shown) {
+    border-bottom-color: var(--accent-red);
+}
+
+.modern-label {
+    display: block;
+    position: relative;
+    margin: 0 0 10px 0;
+    padding: 0;
+    pointer-events: none;
+}
+
+.modern-label > span {
+    font-weight: 500;
+    margin: 0;
+    position: relative;
+    display: block;
+    color: var(--text-primary);
+    font-size: 16px;
+    top: 0;
+    left: 0;
+    margin-bottom: 8px;
+    pointer-events: none;
+}
+
+.validation-error {
+    color: var(--accent-red) !important;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Override Bootstrap form-control styles for modern inputs */
+.modern-input.form-control {
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid var(--dark-accent) !important;
+    border-radius: 0 !important;
+    padding: 12px 0 !important;
+}
+
+.modern-input.form-control:focus {
+    background-color: transparent !important;
+    border-color: var(--accent-blue) !important;
+    box-shadow: none !important;
+}
+
+/* Ensure modern inputs don't get Bootstrap form-control styling */
+.modern-form .modern-input {
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid var(--dark-accent) !important;
+    border-radius: 0 !important;
+    color: var(--text-primary) !important;
+    padding: 12px 0 !important;
+    box-shadow: none !important;
+}
+
+.modern-form .modern-input:focus {
+    background-color: transparent !important;
+    border-bottom-color: var(--accent-blue) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Position labels above inputs for modern forms */
+.modern-form .form-floating {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.modern-form .form-floating > .form-control {
+    padding: 12px 0;
+    height: auto;
+}
+
+.modern-form .form-floating > label {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding: 0;
+    height: auto;
+    transform: none !important;
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modern-input {
+        font-size: 16px;
+    }
+    
+    .modern-label > span {
+        font-size: 16px;
+    }
+}

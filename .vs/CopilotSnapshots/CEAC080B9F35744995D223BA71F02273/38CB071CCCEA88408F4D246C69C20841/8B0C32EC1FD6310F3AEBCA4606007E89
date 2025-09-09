@@ -1,0 +1,39 @@
+﻿using Demo.Infrastructure;
+using Demo.Models.Entities;
+
+namespace Demo.Models.Repository
+{
+    public class InstructorRepository
+    {
+        private AppDbContext _context = new AppDbContext();
+
+
+        public List<Instructor> Load()
+        {
+            var instructors = _context.Instructors.ToList();
+            return instructors;
+        }
+        public Instructor Get(int id)
+        {
+            Instructor instructor = _context.Instructors.FirstOrDefault(c => c.Id == id);
+            return instructor;
+        }
+        public void Insert(Instructor instructor)
+        {
+            _context.Instructors.Add(instructor);
+            _context.SaveChanges();
+        }
+        public void Update(int id, Instructor newInstructor)
+        {
+            var oldInstructor = Get(id);
+            _context.Entry(oldInstructor).CurrentValues.SetValues(newInstructor);
+            _context.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var deletedInstructor = Get(id);
+            _context.Instructors.Remove(deletedInstructor);
+            _context.SaveChanges();
+        }
+    }
+}

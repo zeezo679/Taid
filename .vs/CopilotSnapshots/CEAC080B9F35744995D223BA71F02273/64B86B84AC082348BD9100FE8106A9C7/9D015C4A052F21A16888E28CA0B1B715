@@ -1,0 +1,161 @@
+﻿@model Demo.ViewModel.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9">
+                <!-- Login Card -->
+                <div class="card login-register-card shadow-lg border-0 rounded-4 overflow-hidden animate-fade-in-scale">
+                    <!-- Card Header with Gradient -->
+                    <div class="card-header bg-primary text-white p-5 text-center">
+                        <div class="mb-3">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-20 p-3">
+                                <i data-feather="log-in" style="width: 32px; height: 32px;"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-2">Welcome Back</h2>
+                        <p class="mb-0 text-white-50">Sign in to your account to continue</p>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body p-5">
+                        <!-- Validation Summary -->
+                        <div asp-validation-summary="All" class="alert alert-danger d-none" role="alert">
+                            <i data-feather="alert-circle" class="me-2 icon-sm"></i>
+                            <span>Please correct the errors below.</span>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form asp-action="Login" class="needs-validation" novalidate>
+                            <!-- Username Field -->
+                            <div class="form-floating mb-4">
+                                <input asp-for="Username" 
+                                       class="form-control form-control-lg rounded-3 border-2" 
+                                       id="floatingUsername" 
+                                       placeholder="Enter your username" />
+                                <span asp-validation-for="Username" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="form-floating mb-4">
+                                <input asp-for="Password" 
+                                       class="form-control form-control-lg rounded-3 border-2" 
+                                       id="floatingPassword" 
+                                       placeholder="Enter your password" />
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="form-check">
+                                    <input asp-for="RememberMe" 
+                                           class="form-check-input rounded-2" 
+                                           id="rememberMe" />
+                                    <label class="form-check-label text-muted" for="rememberMe">
+                                        Remember me
+                                    </label>
+                                </div>
+                                <a href="#" class="text-primary text-decoration-none small">
+                                    Forgot password?
+                                </a>
+                            </div>
+
+                            <!-- Sign In Button -->
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-3 py-3">
+                                    <i data-feather="log-in" class="me-2 icon-sm"></i>
+                                    Sign In
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="text-center mb-4">
+                            <div class="d-flex align-items-center">
+                                <hr class="flex-grow-1">
+                                <span class="px-3 text-muted small">OR</span>
+                                <hr class="flex-grow-1">
+                            </div>
+                        </div>
+
+                        <!-- Register Link -->
+                        <div class="text-center">
+                            <p class="text-muted mb-2">Don't have an account?</p>
+                            <a asp-action="Register" asp-controller="Account" 
+                               class="btn btn-outline-primary rounded-3">
+                                <i data-feather="user-plus" class="me-2 icon-sm"></i>
+                                Create Account
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="card-footer bg-light border-0 text-center py-3">
+                        <small class="text-muted">
+                            <i data-feather="shield" class="me-1 icon-sm"></i>
+                            Your information is secure and protected
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Back to Home Link -->
+                <div class="text-center mt-4">
+                    <a asp-action="Index" asp-controller="Home" 
+                       class="text-muted text-decoration-none d-inline-flex align-items-center">
+                        <i data-feather="arrow-left" class="me-2 icon-sm"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Background Pattern -->
+<div class="position-fixed top-0 start-0 w-100 h-100 login-bg-pattern">
+    <div class="d-flex flex-wrap h-100">
+        @for (int i = 0; i < 20; i++)
+        {
+            <div class="flex-fill border border-secondary" style="min-height: 100px;"></div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Add floating label enhancement
+        document.querySelectorAll('.form-floating input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+        
+        // Add loading state to form submission
+        document.querySelector('form').addEventListener('submit', function() {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Signing in...';
+            submitBtn.disabled = true;
+        });
+        
+        // Show validation summary if there are errors
+        const validationSummary = document.querySelector('[asp-validation-summary]');
+        if (validationSummary && validationSummary.innerHTML.trim()) {
+            validationSummary.classList.remove('d-none');
+        }
+    </script>
+}

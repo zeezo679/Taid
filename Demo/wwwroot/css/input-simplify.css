@@ -1,0 +1,62 @@
+/* Remove hover animations from input fields */
+
+/* Standard form controls */
+.form-control {
+    transition: none !important;
+}
+
+.form-control:focus {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: var(--dark-accent) !important;
+}
+
+/* Select inputs */
+.form-select {
+    transition: none !important;
+}
+
+.form-select:focus {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: var(--dark-accent) !important;
+}
+
+/* Modern inputs */
+.modern-input {
+    transition: none !important;
+}
+
+.modern-input:focus,
+.modern-input:valid {
+    padding-top: 12px !important; /* Keep the original padding */
+    transform: none !important;
+    border-bottom-color: var(--dark-accent) !important;
+}
+
+/* Prevent label movement on focus */
+.modern-input:focus + .modern-label > span,
+.modern-input:not(:placeholder-shown) + .modern-label > span {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+}
+
+/* Floating labels */
+.form-floating.focused label,
+.form-floating input:focus ~ label,
+.form-floating input:not(:placeholder-shown) ~ label {
+    color: var(--text-muted) !important;
+    transform: none !important;
+}
+
+.form-floating input:focus {
+    border-color: var(--dark-accent) !important;
+    box-shadow: none !important;
+}
+
+/* Form check inputs */
+.form-check-input:focus {
+    border-color: var(--dark-accent) !important;
+    box-shadow: none !important;
+}

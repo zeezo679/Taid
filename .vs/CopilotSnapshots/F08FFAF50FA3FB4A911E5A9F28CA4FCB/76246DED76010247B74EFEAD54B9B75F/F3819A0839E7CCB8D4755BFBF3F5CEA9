@@ -1,0 +1,173 @@
+﻿@using Demo.Models.Entities
+@model List<Instructor>
+
+<div class="space-y-12 animate-fade-in">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-purple-100 rounded-xl">
+                <i data-feather="users" class="icon text-purple-600"></i>
+            </div>
+            <div>
+                <h1 class="text-4xl font-bold text-gray-900">Instructors</h1>
+                <p class="text-gray-600 text-lg">Manage your teaching staff</p>
+            </div>
+        </div>
+        
+        <a asp-action="addInstructor" asp-controller="Instructor" 
+           class="btn-primary flex items-center gap-3 animate-pulse-hover text-lg">
+            <i data-feather="user-plus" class="icon"></i>
+            Add New Instructor
+        </a>
+    </div>
+
+    <!-- Instructors Table -->
+    <div class="card animate-scale-in">
+        <div class="card-header">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-semibold text-gray-900">Instructor List</h2>
+                <div class="flex items-center gap-3 text-gray-500">
+                    <i data-feather="filter" class="icon-sm"></i>
+                    <span>Filter & Sort</span>
+                </div>
+            </div>
+        </div>
+        
+        @if (Model.Any())
+        {
+            <div class="overflow-x-auto">
+                <table class="table-enhanced w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left">
+                                <div class="flex items-center gap-3">
+                                    <i data-feather="user" class="icon-sm"></i>
+                                    Name
+                                </div>
+                            </th>
+                            <th class="text-left">
+                                <div class="flex items-center gap-3">
+                                    <i data-feather="image" class="icon-sm"></i>
+                                    Photo
+                                </div>
+                            </th>
+                            <th class="text-left">
+                                <div class="flex items-center gap-3">
+                                    <i data-feather="dollar-sign" class="icon-sm"></i>
+                                    Salary
+                                </div>
+                            </th>
+                            <th class="text-left">
+                                <div class="flex items-center gap-3">
+                                    <i data-feather="map-pin" class="icon-sm"></i>
+                                    Address
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="flex items-center justify-center gap-3">
+                                    <i data-feather="settings" class="icon-sm"></i>
+                                    Actions
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var instructor in Model)
+                        {
+                            <tr class="group">
+                                <td>
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <span class="font-semibold text-purple-600">
+                                                @instructor.Name.Substring(0, 1).ToUpper()
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-gray-900 text-lg">@instructor.Name</div>
+                                            <div class="text-sm text-gray-500">ID: @instructor.Id</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
+                                        @if (!string.IsNullOrEmpty(instructor.Image))
+                                        {
+                                            <img src="~/images/@instructor.Image" 
+                                                 alt="@instructor.Name" 
+                                                 class="w-full h-full object-cover" 
+                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                            <div class="w-full h-full flex items-center justify-center" style="display: none;">
+                                                <i data-feather="user" class="icon text-gray-400"></i>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <i data-feather="user" class="icon text-gray-400"></i>
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="font-semibold text-gray-900 text-lg">${@instructor.Salary.ToString("N0")}</div>
+                                    <div class="text-sm text-gray-500">Monthly</div>
+                                </td>
+                                <td>
+                                    <div class="text-gray-900">@instructor.Address</div>
+                                </td>
+                                <td>
+                                    <div class="flex items-center justify-center gap-3">
+                                        <a asp-action="edit" asp-controller="instructor" asp-route-id="@instructor.Id" 
+                                           class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-purple-600 bg-purple-50 rounded-xl hover:bg-purple-100 transition-all duration-200 animate-pulse-hover">
+                                            <i data-feather="edit-2" class="icon-sm"></i>
+                                            Edit
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="card-body text-center py-16">
+                <div class="flex flex-col items-center gap-6">
+                    <div class="p-6 bg-purple-100 rounded-full">
+                        <i data-feather="users" class="icon-lg text-purple-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-900">No Instructors Found</h3>
+                        <p class="text-gray-600 mt-2 text-lg">Get started by adding your first instructor</p>
+                    </div>
+                    <a asp-action="addInstructor" asp-controller="Instructor" 
+                       class="btn-primary flex items-center gap-3 animate-pulse-hover">
+                        <i data-feather="user-plus" class="icon-sm"></i>
+                        Add First Instructor
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Initialize icons after page load
+        feather.replace();
+        
+        // Add hover effects for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.01)';
+                this.style.transition = 'transform 0.2s ease';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+}
+
+
+

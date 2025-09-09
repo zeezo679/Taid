@@ -1,0 +1,79 @@
+/* 
+ * Label Position Overrides
+ * This file moves input labels above the input fields
+ */
+
+/* Standard Bootstrap Form Controls */
+.form-label {
+  display: block;
+  margin-bottom: 8px !important;
+}
+
+/* Bootstrap Floating Labels */
+.form-floating {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-floating > label {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin-bottom: 8px !important;
+  transform: none !important;
+  font-size: 1rem !important;
+  opacity: 1 !important;
+}
+
+/* Remove the ::after pseudo-element from floating labels */
+.form-floating > .form-control-plaintext ~ label::after,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-select ~ label::after {
+  display: none !important;
+  content: none !important;
+}
+
+.form-floating > .form-control {
+  height: calc(3.5rem + 2px) !important;
+  padding: 0.75rem 0.75rem !important;
+}
+
+.form-floating > .form-select {
+  height: calc(3.5rem + 2px) !important;
+  padding: 0.75rem 2.25rem 0.75rem 0.75rem !important;
+}
+
+/* Additional Bootstrap floating label override */
+.form-floating > label::before,
+.form-floating > label::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+
+/* Modern Input Labels */
+.modern-label {
+  margin-bottom: 8px;
+}
+
+.modern-label > span {
+  position: relative;
+  display: block;
+  font-weight: 500;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Modern Input Positioning */
+.modern-input {
+  padding-top: 12px !important;
+}
+
+/* Fix input groups with labels */
+.input-group .form-label {
+  width: 100%;
+}

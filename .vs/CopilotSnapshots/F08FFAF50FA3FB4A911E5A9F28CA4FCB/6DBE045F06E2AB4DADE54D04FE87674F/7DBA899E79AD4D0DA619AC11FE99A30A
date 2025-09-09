@@ -1,0 +1,56 @@
+﻿@using Demo.Models.Entities
+@model List<Course>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row g-3">
+        <div class="col-12">
+            <select class="form-select" name="departmentCourses" id="departmentCourses">
+                <option value="" disabled selected>Select a course from this department</option>
+                @foreach (var course in Model)
+                {
+                    <option value="@course.Id" data-degree="@course.Degree" data-mindegree="@course.MinDegree">
+                        @course.Name (Degree: @course.Degree - @course.MinDegree)
+                    </option>
+                }
+            </select>
+        </div>
+        
+        <div class="col-12">
+            <small class="text-muted d-flex align-items-center">
+                <i data-feather="info" class="icon-sm me-1"></i>
+                Found @Model.Count course(s) in this department
+            </small>
+        </div>
+        
+        @* Display all course details in a nice grid *@
+        <div class="col-12 mt-3">
+            <div class="row g-2">
+                @foreach (var course in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card border-0 bg-white shadow-sm">
+                            <div class="card-body p-3">
+                                <h6 class="card-title mb-2 text-primary">@course.Name</h6>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Max: @course.Degree</small>
+                                    <small class="text-muted">Min: @course.MinDegree</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info d-flex align-items-center">
+        <i data-feather="info" class="me-2"></i>
+        <div>
+            <strong>No courses found</strong><br>
+            <small>This department doesn't have any courses assigned yet.</small>
+        </div>
+    </div>
+}

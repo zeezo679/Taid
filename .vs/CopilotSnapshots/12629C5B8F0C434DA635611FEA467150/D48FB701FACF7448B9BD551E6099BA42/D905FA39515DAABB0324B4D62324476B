@@ -1,0 +1,26 @@
+﻿<div class="alert alert-success shadow-sm border-0 d-flex align-items-center animate__animated animate__fadeInDown" role="alert">
+    <div class="bg-success bg-opacity-25 p-2 rounded-circle me-3">
+        <i data-feather="check-circle" class="text-success" style="width: 24px; height: 24px;"></i>
+    </div>
+    <div>
+        <h5 class="alert-heading mb-1 fw-bold">Success!</h5>
+        <p class="mb-0">Instructor updated successfully.</p>
+    </div>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<script>
+    // Initialize Feather icons if not already done in the parent view
+    if(typeof feather !== 'undefined') {
+        feather.replace();
+    }
+    
+    // Auto-dismiss the alert after 5 seconds
+    setTimeout(function() {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }
+    }, 5000);
+</script>

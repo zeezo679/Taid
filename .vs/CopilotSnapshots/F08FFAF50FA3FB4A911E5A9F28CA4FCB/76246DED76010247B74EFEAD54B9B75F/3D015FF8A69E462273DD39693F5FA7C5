@@ -1,0 +1,60 @@
+﻿@using Demo.Models.Entities
+@model Course
+
+@{
+    var instructors = Model.Instructors;
+    var listItems = new SelectList(instructors, "Id", "Name");
+}
+
+<div class="card shadow-sm border-0 rounded-3" style="max-width: 500px;">
+    <div class="card-header bg-primary text-white">
+        <h4 class="card-title mb-0 fw-bold d-flex align-items-center">
+            <i data-feather="book-open" class="me-2 icon"></i>
+            Course Details
+        </h4>
+    </div>
+    
+    <div class="card-body p-4">
+        <h5 class="mb-3 text-primary fw-bold h4">
+            @Model.Name
+        </h5>
+        
+        <div class="row g-3 mb-4">
+            <div class="col-6">
+                <div class="bg-light rounded-2 p-3 text-center">
+                    <small class="text-muted d-block fw-semibold">Maximum Degree</small>
+                    <span class="h5 text-primary fw-bold mb-0">@Model.Degree</span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="bg-light rounded-2 p-3 text-center">
+                    <small class="text-muted d-block fw-semibold">Minimum Degree</small>
+                    <span class="h5 text-primary fw-bold mb-0">@Model.MinDegree</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label class="form-label fw-semibold d-flex align-items-center">
+                <i data-feather="users" class="me-2 icon-sm"></i>
+                View Instructors
+            </label>
+            <select asp-items="listItems" class="form-select">
+                <option value="0">Select an instructor to view details</option>
+            </select>
+        </div>
+        
+        <div class="d-grid">
+            <button class="btn btn-primary" type="button">
+                <i data-feather="eye" class="me-2 icon-sm"></i>
+                Read more
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize feather icons for this partial
+    feather.replace();
+</script>
+

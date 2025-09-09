@@ -1,0 +1,99 @@
+﻿@using Demo.Models.Entities
+@using Demo.ViewModel
+@model CourseViewModel
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-header bg-primary text-white p-4">
+            <div class="d-flex align-items-center">
+                <div class="p-3 bg-secondary bg-opacity-50 rounded-3 me-3 border" style="border-color: var(--accent-blue) !important;">
+                    <i data-feather="plus-circle" class="icon text-white"></i>
+                </div>
+                <div>
+                    <h2 class="h3 mb-1 fw-bold text-white">Add New Course</h2>
+                    <p class="mb-0 text-white-50">Fill in the details to add a new course to the system</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-body p-4">
+            <form method="post" asp-action="addCourse" asp-controller="course" asp-route-id="@Model.Id">
+                <input asp-for="Id" type="hidden" />
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="Name">
+                                <i data-feather="type" class="icon-sm text-primary me-2"></i>
+                                Course Name
+                            </label>
+                            <input type="text" asp-for="Name" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Enter course name" />
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="Degree">
+                                <i data-feather="award" class="icon-sm text-primary me-2"></i>
+                                Maximum Degree
+                            </label>
+                            <input type="number" asp-for="Degree" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Enter maximum degree" />
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="MinDegree">
+                                <i data-feather="target" class="icon-sm text-primary me-2"></i>
+                                Minimum Degree
+                            </label>
+                            <input type="number" asp-for="MinDegree" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Enter minimum degree" 
+                                   min="0" />
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="DeptId">
+                                <i data-feather="building" class="icon-sm text-primary me-2"></i>
+                                Department
+                            </label>
+                            <select asp-for="DeptId" class="form-select form-select-lg">
+                                <option value="" disabled selected>Select a department</option>
+                                @foreach(Department dept in Model.Departments)
+                                {
+                                    <option value="@dept.Id">@dept.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex gap-3 pt-4 mt-4 border-top">
+                    <button type="submit" class="btn btn-primary btn-lg d-flex align-items-center">
+                        <i data-feather="plus" class="icon-sm me-2"></i>
+                        Add Course
+                    </button>
+                    
+                    <a asp-action="Index" asp-controller="Course" class="btn btn-outline-secondary btn-lg d-flex align-items-center">
+                        <i data-feather="arrow-left" class="icon-sm me-2"></i>
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        // Initialize feather icons
+        feather.replace();
+    </script>
+}

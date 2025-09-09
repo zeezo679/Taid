@@ -1,0 +1,167 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark shadow-sm mb-4">
+    <div class="container">
+        <!-- Brand -->
+        <a class="navbar-brand fw-bold d-flex align-items-center"
+           asp-area="" asp-controller="Home" asp-action="Index">
+            <i data-feather="layers" class="me-2 text-primary" style="width: 24px; height: 24px;"></i>
+            Demo
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Desktop Nav -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center smooth-nav" 
+                       data-page="home"
+                       asp-area="" asp-controller="Home" asp-action="Index">
+                        <i data-feather="home" class="me-2" style="width: 16px; height: 16px;"></i>
+                        Home
+                    </a>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if(User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center smooth-nav"
+                               data-page="instructors"
+                               asp-area="" asp-controller="Instructor" asp-action="Index">
+                                <i data-feather="users" class="me-2" style="width: 16px; height: 16px;"></i>
+                                Instructors
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center smooth-nav"
+                           data-page="courses"
+                           asp-area="" asp-controller="Course" asp-action="Index">
+                            <i data-feather="book-open" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Courses
+                        </a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center smooth-nav"
+                       data-page="privacy"
+                       asp-area="" asp-controller="Home" asp-action="Privacy">
+                        <i data-feather="shield" class="me-2" style="width: 16px; height: 16px;"></i>
+                        Privacy
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">                    
+                @if(User.Identity.IsAuthenticated == false)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center smooth-nav"
+                           data-page="login"
+                           asp-area="" asp-controller="Account" asp-action="Login">
+                            <i data-feather="log-in" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center smooth-nav"
+                           data-page="register"
+                           asp-area="" asp-controller="Account" asp-action="Register">
+                            <i data-feather="user-plus" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Register
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center smooth-nav"
+                           data-page="logout"
+                           asp-area="" asp-controller="Account" asp-action="Logout">
+                            <i data-feather="log-out" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Logout
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center px-3">
+                        <div class="d-flex align-items-center">
+                            <i data-feather="user" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <span class="text-light">Hello, @User.Identity.Name</span>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    /* Enhanced Navigation Styles */
+    .smooth-nav {
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .smooth-nav::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-blue), #0284c7);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(-50%);
+        border-radius: 1px;
+    }
+
+    .smooth-nav:hover::after,
+    .smooth-nav.active::after {
+        width: 80%;
+    }
+
+    .smooth-nav:hover {
+        transform: translateY(-2px);
+        color: var(--accent-blue) !important;
+    }
+
+    .smooth-nav i {
+        transition: transform 0.2s ease;
+    }
+
+    .smooth-nav:hover i {
+        transform: scale(1.1);
+    }
+
+    /* Mobile menu enhancements */
+    @media (max-width: 991.98px) {
+        .smooth-nav::after {
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            transform: translateX(0);
+        }
+
+        .smooth-nav:hover::after,
+        .smooth-nav.active::after {
+            width: 100%;
+        }
+
+        .collapse.navbar-collapse {
+            background: var(--dark-card);
+            border-radius: 8px;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--dark-accent);
+        }
+    }
+
+    /* User greeting enhancement */
+    .nav-item span {
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+</style>

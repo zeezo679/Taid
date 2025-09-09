@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mx-auto px-4 py-8 animate-fade-in">
+    <!-- Hero Section -->
+    <div class="text-center py-12 mb-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-center mb-8">
+                <div class="p-6 bg-purple-100 rounded-full animate-pulse-hover">
+                    <i data-feather="layers" class="w-16 h-16 text-purple-600"></i>
+                </div>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 animate-scale-in">
+                Welcome to <span class="text-purple-gradient">Demo</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-600 mb-8 animate-slide-down leading-relaxed">
+                A comprehensive management system for educational institutions. 
+                Manage courses, departments, and analytics with ease and elegance.
+            </p>
+        </div>
+    </div>
+
+    <!-- Features Grid Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 animate-scale-in">
+            <div class="p-8 text-center">
+                <div class="flex justify-center mb-6">
+                    <div class="p-4 bg-purple-100 rounded-xl">
+                        <i data-feather="book-open" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Course Management</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Organize courses by departments and manage curriculum efficiently with our comprehensive course management system.
+                </p>
+                <a asp-controller="Course" asp-action="Index" 
+                   class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 font-medium">
+                    <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    Manage Courses
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 animate-scale-in" style="animation-delay: 0.1s;">
+            <div class="p-8 text-center">
+                <div class="flex justify-center mb-6">
+                    <div class="p-4 bg-green-100 rounded-xl">
+                        <i data-feather="bar-chart-2" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Analytics & Reports</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Get detailed insights into performance metrics and generate comprehensive reports for better decision making.
+                </p>
+                <a asp-controller="Results" asp-action="Details" 
+                   class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium">
+                    <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    View Analytics
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 animate-scale-in" style="animation-delay: 0.2s;">
+            <div class="p-8 text-center">
+                <div class="flex justify-center mb-6">
+                    <div class="p-4 bg-orange-100 rounded-xl">
+                        <i data-feather="settings" class="w-8 h-8 text-orange-500"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">System Management</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Configure system settings, manage departments, and maintain the overall educational infrastructure.
+                </p>
+                <a href="#" onclick="alert('System management coming soon!')" 
+                   class="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200 font-medium">
+                    <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    Manage System
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Initialize icons after page load
+        feather.replace();
+        
+        // Add staggered animations to feature cards
+        const cards = document.querySelectorAll('.grid > div');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+        
+        // Add smooth scroll behavior for any future anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+}
+

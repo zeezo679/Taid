@@ -1,0 +1,152 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center py-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-center mb-4">
+                    <div class="p-4 bg-purple-100 rounded-circle">
+                        <i data-feather="layers" class="text-purple-600" style="width: 64px; height: 64px;"></i>
+                    </div>
+                </div>
+                
+                <h1 class="display-3 fw-bold mb-4">
+                    Welcome to <span class="text-primary">Demo</span>
+                </h1>
+                
+                <p class="lead text-muted mb-4">
+                    A comprehensive management system for educational institutions. 
+                    Manage courses, departments, and analytics with ease and elegance.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Grid Section -->
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-3 animate-fade-in">
+                <div class="card-body text-center p-4">
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="p-3 bg-purple-100 rounded-3">
+                            <i data-feather="book-open" class="text-purple-600 icon-lg"></i>
+                        </div>
+                    </div>
+                    <h3 class="h5 fw-bold mb-3">Course Management</h3>
+                    <p class="text-muted mb-4">
+                        Organize courses by departments and manage curriculum efficiently with our comprehensive course management system.
+                    </p>
+                    <a asp-controller="Course" asp-action="Index" 
+                       class="btn btn-primary d-flex align-items-center justify-content-center">
+                        <i data-feather="arrow-right" class="icon-sm me-2"></i>
+                        Manage Courses
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-3 animate-fade-in">
+                <div class="card-body text-center p-4">
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="p-3 bg-success bg-opacity-25 rounded-3">
+                            <i data-feather="bar-chart-2" class="text-success icon-lg"></i>
+                        </div>
+                    </div>
+                    <h3 class="h5 fw-bold mb-3">Analytics & Reports</h3>
+                    <p class="text-muted mb-4">
+                        Get detailed insights into performance metrics and generate comprehensive reports for better decision making.
+                    </p>
+                    <a asp-controller="Results" asp-action="Details" 
+                       class="btn btn-success d-flex align-items-center justify-content-center">
+                        <i data-feather="arrow-right" class="icon-sm me-2"></i>
+                        View Analytics
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-3 animate-fade-in">
+                <div class="card-body text-center p-4">
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="p-3 bg-warning bg-opacity-25 rounded-3">
+                            <i data-feather="users" class="text-warning icon-lg"></i>
+                        </div>
+                    </div>
+                    <h3 class="h5 fw-bold mb-3">Staff Management</h3>
+                    <p class="text-muted mb-4">
+                        Manage instructors, their assignments, and track their performance across different courses and departments.
+                    </p>
+                    <a asp-controller="Instructor" asp-action="Index" 
+                       class="btn btn-warning d-flex align-items-center justify-content-center">
+                        <i data-feather="arrow-right" class="icon-sm me-2"></i>
+                        Manage Staff
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="row g-4 mt-5">
+        <div class="col-12">
+            <div class="card bg-primary text-white border-0 rounded-3">
+                <div class="card-body p-5">
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-4 mb-md-0">
+                            <div class="d-flex flex-column align-items-center">
+                                <i data-feather="book-open" class="mb-2" style="width: 32px; height: 32px;"></i>
+                                <h3 class="h2 fw-bold mb-1">50+</h3>
+                                <p class="mb-0">Active Courses</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4 mb-md-0">
+                            <div class="d-flex flex-column align-items-center">
+                                <i data-feather="users" class="mb-2" style="width: 32px; height: 32px;"></i>
+                                <h3 class="h2 fw-bold mb-1">25+</h3>
+                                <p class="mb-0">Expert Instructors</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <i data-feather="building" class="mb-2" style="width: 32px; height: 32px;"></i>
+                                <h3 class="h2 fw-bold mb-1">10+</h3>
+                                <p class="mb-0">Departments</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Initialize icons after page load
+        feather.replace();
+        
+        // Add staggered animations to feature cards
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+        
+        // Add hover effects to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+}
+

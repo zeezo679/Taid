@@ -1,0 +1,160 @@
+﻿@model Demo.ViewModel.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <!-- Register Card -->
+                <div class="card login-register-card shadow-lg border-0 rounded-4 overflow-hidden animate-fade-in-scale">
+                    <!-- Card Header with Gradient -->
+                    <div class="card-header bg-primary text-white p-5 text-center">
+                        <div class="mb-3">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-20 p-3">
+                                <i data-feather="user-plus" style="width: 32px; height: 32px;"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-bold mb-2">Create Account</h2>
+                        <p class="mb-0 text-white-50">Join our educational platform today</p>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body p-5">
+                        <!-- Validation Summary -->
+                        <div asp-validation-summary="All" class="alert alert-danger" role="alert" style="display:block">
+                            <i data-feather="alert-circle" class="me-2 icon-sm"></i>
+                            <span>Please correct the errors below.</span>
+                        </div>
+
+                        <!-- Register Form -->
+                        <form asp-action="Register" class="modern-form">
+                            <!-- Username Field -->
+                            <div class="modern-input-group mb-4">
+                                <input asp-for="Username" 
+                                       class="modern-input" 
+                                       id="username" 
+                                       required 
+                                       autocomplete="off" />
+                                <label for="username" class="modern-label">
+                                    <span>Username</span>
+                                </label>
+                                <span asp-validation-for="Username" class="validation-error"></span>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="modern-input-group mb-4">
+                                <input asp-for="Password" 
+                                       class="modern-input" 
+                                       id="password" 
+                                       required 
+                                       autocomplete="off" />
+                                <label for="password" class="modern-label">
+                                    <span>Password</span>
+                                </label>
+                                <span asp-validation-for="Password" class="validation-error"></span>
+                            </div>
+
+                            <!-- Confirm Password Field -->
+                            <div class="modern-input-group mb-4">
+                                <input asp-for="ConfirmPassword" 
+                                       class="modern-input" 
+                                       id="confirmPassword" 
+                                       required 
+                                       autocomplete="off" />
+                                <label for="confirmPassword" class="modern-label">
+                                    <span>Confirm Password</span>
+                                </label>
+                                <span asp-validation-for="ConfirmPassword" class="validation-error"></span>
+                            </div>
+
+                            <!-- Address Field -->
+                            <div class="modern-input-group mb-4">
+                                <input asp-for="Address" 
+                                       class="modern-input" 
+                                       id="address" 
+                                       required 
+                                       autocomplete="off" />
+                                <label for="address" class="modern-label">
+                                    <span>Address</span>
+                                </label>
+                                <span asp-validation-for="Address" class="validation-error"></span>
+                            </div>
+
+                            <!-- Create Account Button -->
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-3 py-3">
+                                    <i data-feather="user-plus" class="me-2 icon-sm"></i>
+                                    Create Account
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="text-center mb-4">
+                            <div class="d-flex align-items-center">
+                                <hr class="flex-grow-1">
+                                <span class="px-3 text-muted small">OR</span>
+                                <hr class="flex-grow-1">
+                            </div>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <p class="text-muted mb-2">Already have an account?</p>
+                            <a asp-action="Login" asp-controller="Account" 
+                               class="btn btn-outline-primary rounded-3">
+                                <i data-feather="log-in" class="me-2 icon-sm"></i>
+                                Sign In
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="card-footer bg-light border-0 text-center py-3">
+                        <small class="text-muted">
+                            <i data-feather="shield" class="me-1 icon-sm"></i>
+                            By creating an account, you agree to our terms of service
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Back to Home Link -->
+                <div class="text-center mt-4">
+                    <a asp-action="Index" asp-controller="Home" 
+                       class="text-muted text-decoration-none d-inline-flex align-items-center">
+                        <i data-feather="arrow-left" class="me-2 icon-sm"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Background Pattern -->
+<div class="position-fixed top-0 start-0 w-100 h-100 login-bg-pattern">
+    <div class="d-flex flex-wrap h-100">
+        @for (int i = 0; i < 20; i++)
+        {
+            <div class="flex-fill border border-secondary" style="min-height: 100px;"></div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Show validation summary if there are errors
+        const validationSummary = document.querySelector('[asp-validation-summary]');
+        if (validationSummary && validationSummary.innerHTML.trim()) {
+            validationSummary.classList.remove('d-none');
+        }
+    </script>
+}

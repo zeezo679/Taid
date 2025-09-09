@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<partial name="HeaderPartial"/>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Header / Navbar -->
+    @Html.Partial("_NavPartial")
+
+    <!-- Main -->
+    <main role="main" class="flex-grow-1 container py-4">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <partial name="_FooterPartial" />
+
+    <!-- jQuery (required for Bootstrap) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
+    <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Initialize Feather Icons -->
+    <script>
+        feather.replace();
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('d-none');
+        }
+        
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        // Add loading states for forms
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function() {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<div class="spinner-border spinner-border-sm me-2" role="status"></div>Loading...';
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+        
+        // Force dark theme application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure dark theme is applied
+            document.body.style.backgroundColor = 'var(--dark-primary)';
+            document.body.style.color = 'var(--text-primary)';
+            
+            // Add dark theme class to all Bootstrap components
+            document.querySelectorAll('.modal-content, .dropdown-menu, .toast').forEach(element => {
+                element.style.backgroundColor = 'var(--dark-card)';
+                element.style.borderColor = 'var(--dark-accent)';
+                element.style.color = 'var(--text-primary)';
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

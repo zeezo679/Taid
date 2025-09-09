@@ -1,0 +1,46 @@
+﻿@using Demo.Models.Entities
+@model List<Trainee>
+
+<h1>Trainees</h1>
+<p>Manage Trainees</p>
+
+<button asp-action="AddTrainee" asp-controller="Trainee">
+    <a asp-action="AddTrainee" asp-controller="Trainee">
+        Add Trainee
+    </a>
+</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Address</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Department</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach(var trainee in Model)
+        {
+            <tr>
+                <td>@trainee.Name</td>
+                <td><img src="@trainee.Image" alt="null" /></td>
+                <td>@trainee.Address</td>
+                <td>@(trainee.Grade)%</td>
+                <td>@trainee.Department.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Trainee">
+                        <button asp-action="Edit" asp-controller="Trainee">
+                            Edit
+                        </button>
+                    </a>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

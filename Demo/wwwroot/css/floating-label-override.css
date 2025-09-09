@@ -1,0 +1,71 @@
+/**
+ * Bootstrap Floating Label Override
+ * This file explicitly removes the default behavior of Bootstrap's floating labels
+ * to ensure they appear above the input fields without any pseudo-elements.
+ */
+
+/* Reset all floating label styles */
+.form-floating {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main label styling */
+.form-floating > label {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin-bottom: 8px !important;
+  transform: none !important;
+  font-size: 1rem !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  border: none !important;
+  z-index: 1 !important;
+}
+
+/* Force label to stay in position */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  opacity: 1 !important;
+  transform: none !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+/* Remove ALL pseudo-elements */
+.form-floating > label::after,
+.form-floating > label::before,
+.form-floating > .form-control ~ label::after,
+.form-floating > .form-control ~ label::before,
+.form-floating > .form-control-plaintext ~ label::after,
+.form-floating > .form-control-plaintext ~ label::before,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:focus ~ label::before,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::before,
+.form-floating > .form-select ~ label::after,
+.form-floating > .form-select ~ label::before {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  border: none !important;
+}
+
+/* Input control styling */
+.form-floating > .form-control,
+.form-floating > .form-control-plaintext,
+.form-floating > .form-select {
+  height: calc(3.5rem + 2px) !important;
+  padding: 0.75rem 0.75rem !important;
+}
+
+/* Fix placeholder behavior */
+.form-floating > .form-control::placeholder {
+  opacity: 1 !important;
+}

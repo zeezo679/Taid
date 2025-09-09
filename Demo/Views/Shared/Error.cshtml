@@ -1,0 +1,91 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="min-h-screen flex items-center justify-center px-4">
+    <div class="card max-w-2xl w-full animate-scale-in">
+        <div class="card-body text-center">
+            <!-- Error Icon -->
+            <div class="flex justify-center mb-6">
+                <div class="p-4 bg-red-100 rounded-full">
+                    <i data-feather="alert-triangle" class="w-16 h-16 text-red-600"></i>
+                </div>
+            </div>
+            
+            <!-- Error Title -->
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Oops! Something went wrong</h1>
+            
+            <!-- Error Description -->
+            <p class="text-xl text-gray-600 mb-8">
+                We encountered an unexpected error while processing your request. 
+                Don't worry, our team has been notified and is working to fix this.
+            </p>
+            
+            @if (Model?.ShowRequestId == true)
+            {
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-center gap-2 justify-center">
+                        <i data-feather="hash" class="icon-sm text-gray-500"></i>
+                        <span class="text-sm font-medium text-gray-700">Request ID:</span>
+                        <code class="text-sm bg-gray-200 px-2 py-1 rounded">@Model.RequestId</code>
+                    </div>
+                </div>
+            }
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/" class="btn-primary flex items-center gap-2 justify-center animate-pulse-hover">
+                    <i data-feather="home" class="icon-sm"></i>
+                    Go Home
+                </a>
+                
+                <button onclick="history.back()" 
+                        class="btn-secondary flex items-center gap-2 justify-center animate-pulse-hover">
+                    <i data-feather="arrow-left" class="icon-sm"></i>
+                    Go Back
+                </button>
+                
+                <button onclick="location.reload()" 
+                        class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-200 transition-all duration-200 flex items-center gap-2 justify-center">
+                    <i data-feather="refresh-cw" class="icon-sm"></i>
+                    Try Again
+                </button>
+            </div>
+            
+            <!-- Additional Help -->
+            <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div class="flex items-start gap-3 text-left">
+                    <i data-feather="help-circle" class="icon text-blue-600 mt-1 flex-shrink-0"></i>
+                    <div>
+                        <h3 class="font-semibold text-blue-900 mb-2">Need Help?</h3>
+                        <p class="text-blue-700 text-sm mb-3">
+                            If this problem persists, please contact our support team with the request ID above.
+                        </p>
+                        <a href="mailto:support@demo.com" 
+                           class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            <i data-feather="mail" class="icon-sm"></i>
+                            Contact Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Initialize icons
+        feather.replace();
+        
+        // Auto-report error to monitoring system (if available)
+        if (window.errorReporting) {
+            window.errorReporting.captureError({
+                requestId: '@Model?.RequestId',
+                page: window.location.href,
+                timestamp: new Date().toISOString()
+            });
+        }
+    </script>
+}

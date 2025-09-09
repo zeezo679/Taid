@@ -1,0 +1,269 @@
+﻿@using Demo.Models.Entities
+@model Instructor
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-header bg-primary text-white p-4">
+            <div class="d-flex align-items-center">
+                <div class="p-3 bg-secondary bg-opacity-50 rounded-3 me-3 border" style="border-color: var(--accent-blue) !important;">
+                    <i data-feather="user-plus" class="icon text-white"></i>
+                </div>
+                <div>
+                    <h2 class="h3 mb-1 fw-bold text-white">Add New Instructor</h2>
+                    <p class="mb-0 text-white-50">Fill in the details to add a new instructor to the system</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-body p-4">
+            <form method="post" asp-action="successAdd" asp-controller="instructor">
+                <input asp-for="Id" type="hidden" />
+                
+                <div class="row g-4">
+                    <!-- Instructor Name -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="Name">
+                                <i data-feather="user" class="icon-sm text-primary me-2"></i>
+                                Instructor Name
+                            </label>
+                            <input type="text" asp-for="Name" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Enter instructor's full name" 
+                                   required />
+                            <span asp-validation-for="Name" class="field-validation-error"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Image -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="Image">
+                                <i data-feather="image" class="icon-sm text-primary me-2"></i>
+                                Profile Image
+                            </label>
+                            <input type="text" asp-for="Image" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Enter image filename (e.g., instructor1.jpg)" 
+                                   required />
+                            <span asp-validation-for="Image" class="field-validation-error"></span>
+                            <div class="form-text">
+                                <i data-feather="info" class="icon-sm me-1"></i>
+                                Enter the filename of the instructor's profile image
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Salary -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="Salary">
+                                <i data-feather="dollar-sign" class="icon-sm text-primary me-2"></i>
+                                Monthly Salary
+                            </label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text">$</span>
+                                <input type="number" asp-for="Salary" 
+                                       class="form-control" 
+                                       placeholder="Enter monthly salary" 
+                                       min="0" 
+                                       step="100"
+                                       required />
+                            </div>
+                            <span asp-validation-for="Salary" class="field-validation-error"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Address -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="Address">
+                                <i data-feather="map-pin" class="icon-sm text-primary me-2"></i>
+                                Address
+                            </label>
+                            <textarea asp-for="Address" 
+                                      class="form-control form-control-lg" 
+                                      placeholder="Enter full address" 
+                                      rows="3"
+                                      required></textarea>
+                            <span asp-validation-for="Address" class="field-validation-error"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Department -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="DeptId">
+                                <i data-feather="building" class="icon-sm text-primary me-2"></i>
+                                Department
+                            </label>
+                            <select asp-for="DeptId" class="form-select form-select-lg" required onchange="ShowCourses(this.value)">
+                                <option value="" disabled selected>Select a department</option>
+                                @foreach (Department dept in ViewBag.Departments)
+                                {
+                                    <option value="@dept.Id">@dept.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="DeptId" class="field-validation-error"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Course (Main Selection) -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label d-flex align-items-center fw-semibold" asp-for="CourseId">
+                                <i data-feather="book-open" class="icon-sm text-primary me-2"></i>
+                                Primary Course
+                            </label>
+                            <select asp-for="CourseId" class="form-select form-select-lg" required>
+                                <option value="" disabled selected>Select a course</option>
+                                @foreach(Course course in ViewBag.Courses)
+                                {
+                                    <option value="@course.Id">@course.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CourseId" class="field-validation-error"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Department Courses Section (Hidden by default) -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card bg-secondary border-0 d-none" id="CoursesPerDept">
+                            <div class="card-header bg-transparent border-0 pb-0">
+                                <h6 class="card-title d-flex align-items-center mb-0">
+                                    <i data-feather="list" class="icon-sm text-primary me-2"></i>
+                                    Courses in Selected Department
+                                </h6>
+                                <small class="text-muted">View all courses available in this department</small>
+                            </div>
+                            <div class="card-body pt-3">
+                                <div id="selectContainer">
+                                    <!-- AJAX content will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="d-flex gap-3 pt-4 mt-4 border-top">
+                    <button type="submit" class="btn btn-primary btn-lg d-flex align-items-center">
+                        <i data-feather="plus" class="icon-sm me-2"></i>
+                        Add Instructor
+                    </button>
+                    
+                    <a asp-action="Index" asp-controller="Instructor" class="btn btn-outline-secondary btn-lg d-flex align-items-center">
+                        <i data-feather="arrow-left" class="icon-sm me-2"></i>
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    
+    <script>
+        function ShowCourses(deptId) {
+            console.log("Loading courses for department:", deptId);
+            
+            var container = document.getElementById("CoursesPerDept");
+            var selectContainer = document.getElementById("selectContainer");
+            
+            // Show the container with Bootstrap classes
+            container.classList.remove("d-none");
+            container.classList.add("animate-fade-in");
+            
+            // Show loading state
+            selectContainer.innerHTML = `
+                <div class="text-center p-3">
+                    <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span class="text-muted">Loading courses...</span>
+                </div>
+            `;
+
+            // AJAX call
+            $.ajax({
+                url: "showcoursesperdept/?deptId=" + deptId,
+                type: "GET",
+                success: function(result) {
+                    console.log("Course details loaded successfully");
+                    selectContainer.innerHTML = result;
+                    
+                    // Re-initialize feather icons
+                    if (typeof feather !== 'undefined') {
+                        feather.replace();
+                    }
+                    
+                    // Smooth scroll to the courses section
+                    setTimeout(() => {
+                        container.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest' 
+                        });
+                    }, 300);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error loading courses:", error);
+                    selectContainer.innerHTML = `
+                        <div class="alert alert-danger d-flex align-items-center">
+                            <i data-feather="alert-circle" class="me-2"></i>
+                            <div>Error loading courses. Please try again.</div>
+                        </div>
+                    `;
+                    feather.replace();
+                }
+            });
+        }
+
+        // Initialize feather icons
+        feather.replace();
+        
+        // Enhanced form validation display
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add Bootstrap validation classes
+            document.querySelectorAll('input, select, textarea').forEach(field => {
+                field.addEventListener('blur', function() {
+                    if (this.checkValidity()) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                    } else {
+                        this.classList.remove('is-valid');
+                        this.classList.add('is-invalid');
+                    }
+                });
+                
+                // Clear validation on focus
+                field.addEventListener('focus', function() {
+                    this.classList.remove('is-invalid', 'is-valid');
+                });
+            });
+            
+            // Form submission loading state
+            document.querySelector('form').addEventListener('submit', function(e) {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (this.checkValidity()) {
+                    submitBtn.innerHTML = `
+                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                        Adding Instructor...
+                    `;
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+        
+        // Auto-resize textarea
+        document.querySelector('textarea').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    </script>
+}

@@ -1,0 +1,207 @@
+﻿@using Demo.Models.Entities
+@model List<Course>
+
+@{
+    var courses = Model;
+}
+
+<div class="container-fluid px-4 py-4">
+    <!-- Bootstrap Alert Example -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i data-feather="check-circle" class="me-2 icon-sm"></i>
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Header with Bootstrap -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <div class="d-flex align-items-center">
+                <div class="p-3 bg-purple-100 rounded-3 me-3">
+                    <i data-feather="book-open" class="text-purple-600 icon-lg"></i>
+                </div>
+                <div>
+                    <h1 class="h2 mb-1 fw-bold">Courses</h1>
+                    <p class="text-muted mb-0">Manage and organize your educational courses</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a asp-action="addCourse" asp-controller="Course" 
+               class="btn btn-primary btn-lg">
+                <i data-feather="plus" class="me-2 icon-sm"></i>
+                Add New Course
+            </a>
+        </div>
+    </div>
+
+    <!-- AJAX Details Container -->
+    <div class="mb-4">
+        <div id="CourseDetails" class="border border-primary rounded-3 p-3" style="min-height: 50px; display: none;">
+            <!-- AJAX content will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Course Cards using Bootstrap -->
+    <div class="row g-4">
+        @foreach(var course in courses)
+        {
+            <div class="col-lg-6 col-xl-4">
+                <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                    <!-- Purple Header -->
+                    <div class="card-header bg-primary text-white p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <small class="text-white-50 text-uppercase fw-semibold">Course</small>
+                                <h5 class="card-title mt-2 mb-0 text-white fw-bold">
+                                    <a href="#" onclick="GetData(@course.Id)" class="text-white text-decoration-none">
+                                        @course.Name
+                                    </a>
+                                </h5>
+                            </div>
+                            <span class="badge bg-light text-primary rounded-pill">
+                                ID: @course.Id
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <!-- Department -->
+                        <div class="mb-3">
+                            <small class="text-muted text-uppercase fw-semibold">Department</small>
+                            <div class="fw-bold text-primary">@course.Department.Name</div>
+                        </div>
+
+                        <!-- Degrees Row -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <div class="bg-light rounded-2 p-3 text-center">
+                                    <small class="text-muted d-block">Max Degree</small>
+                                    <span class="h5 fw-bold text-primary mb-0">@course.Degree</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-light rounded-2 p-3 text-center">
+                                    <small class="text-muted d-block">Min Degree</small>
+                                    <span class="h5 fw-bold text-primary mb-0">@course.MinDegree</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Instructors -->
+                        <div class="mb-4">
+                            @{
+                                var instructors = (IEnumerable<dynamic>)ViewBag.Instructors;
+                                var filteredInstructors = instructors.Where(i => i.CourseId == course.Id);
+                                var theirCount = filteredInstructors.Count();
+                            }
+                            
+                            <small class="text-muted text-uppercase fw-semibold">Instructors</small>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="badge bg-primary rounded-pill me-2">@theirCount</span>
+                                <span class="text-muted">Total Assigned</span>
+                            </div>
+                            
+                            @if (theirCount > 0)
+                            {
+                                <div class="mt-2">
+                                    @foreach(var instructor in filteredInstructors.Take(3))
+                                    {
+                                        <span class="badge bg-light text-dark me-1 mb-1">@instructor.Name</span>
+                                    }
+                                    @if (theirCount > 3)
+                                    {
+                                        <span class="badge bg-secondary">+@(theirCount - 3) more</span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <small class="text-muted fst-italic">No instructors assigned</small>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Card Footer with Actions -->
+                    <div class="card-footer bg-transparent p-4 pt-0">
+                        <div class="d-grid gap-2">
+                            <div class="btn-group" role="group">
+                                <a asp-action="edit" asp-controller="course" asp-route-id="@course.Id" 
+                                   class="btn btn-outline-primary">
+                                    <i data-feather="edit-2" class="me-1 icon-sm"></i>
+                                    Edit
+                                </a>
+                                <a asp-action="CourseDetails" asp-controller="course" asp-route-id="@course.Id"
+                                   class="btn btn-primary">
+                                    <i data-feather="eye" class="me-1 icon-sm"></i>
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Empty State with Bootstrap -->
+    @if (!courses.Any())
+    {
+        <div class="text-center py-5">
+            <div class="mx-auto mb-4" style="width: 80px; height: 80px;">
+                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center h-100">
+                    <i data-feather="book-open" class="text-muted" style="width: 40px; height: 40px;"></i>
+                </div>
+            </div>
+            <h3 class="h4 mb-3">No courses found</h3>
+            <p class="text-muted mb-4">Get started by adding your first course to the system.</p>
+            <a asp-action="addCourse" asp-controller="Course" 
+               class="btn btn-primary btn-lg">
+                <i data-feather="plus" class="me-2 icon-sm"></i>
+                Add Your First Course
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function GetData(id) {
+            console.log(id);
+            event.preventDefault();
+
+            // Show the details container
+            document.getElementById("CourseDetails").style.display = "block";
+            document.getElementById("CourseDetails").innerHTML = '<div class="text-center p-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+
+            // AJAX call
+            $.ajax({
+                url: "Course/CourseDetails/" + id,
+                success: function(result) {
+                    console.log(result);
+                    document.getElementById("CourseDetails").innerHTML = result;
+                },
+                error: function() {
+                    document.getElementById("CourseDetails").innerHTML = '<div class="alert alert-danger">Error loading course details.</div>';
+                }
+            });
+        }
+
+        // Initialize icons after page load
+        feather.replace();
+        
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function() {
+            $('.alert').alert('close');
+        }, 5000);
+        
+        // Add fade in animation to cards
+        document.querySelectorAll('.card').forEach((card, index) => {
+            card.classList.add('animate-fade-in');
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+}

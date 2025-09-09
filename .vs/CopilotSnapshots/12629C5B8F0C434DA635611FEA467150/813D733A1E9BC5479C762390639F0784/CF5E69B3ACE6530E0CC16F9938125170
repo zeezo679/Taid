@@ -1,0 +1,194 @@
+﻿@using Demo.Models.Entities
+@model Instructor
+
+<div class="card shadow-lg border-0 rounded-lg mb-4 animate__animated animate__fadeIn">
+    <div class="card-header bg-gradient-primary-to-secondary text-white py-3">
+        <div class="d-flex align-items-center">
+            <div class="p-2 bg-white bg-opacity-25 rounded-circle me-3">
+                <i data-feather="edit-2" class="text-white"></i>
+            </div>
+            <div>
+                <h2 class="h3 fw-bold mb-0">Edit Instructor</h2>
+                <p class="mb-0 opacity-75">Update instructor information</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body p-4">
+        <!-- Current Instructor Info -->
+        <div class="bg-light rounded-3 p-4 mb-4 border-start border-4 border-primary shadow-sm">
+            <div class="d-flex align-items-center">
+                <div class="instructor-avatar rounded-circle me-3 position-relative" style="width: 70px; height: 70px;">
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="~/images/@Model.Image" 
+                             alt="@Model.Name" 
+                             class="w-100 h-100 object-fit-cover rounded-circle" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center rounded-circle" style="display: none;">
+                            <span class="fw-bold text-white fs-3">@Model.Name.Substring(0, 1).ToUpper()</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="w-100 h-100 bg-primary d-flex align-items-center justify-content-center rounded-circle">
+                            <span class="fw-bold text-white fs-3">@Model.Name.Substring(0, 1).ToUpper()</span>
+                        </div>
+                    }
+                </div>
+                <div>
+                    <h3 class="fw-semibold h5 mb-1">@Model.Name</h3>
+                    <p class="text-muted mb-1 small"><span class="fw-medium">ID:</span> @Model.Id</p>
+                    <p class="text-muted mb-0 small"><span class="fw-medium">Current Salary:</span> <span class="badge bg-success bg-opacity-10 text-success">$@Model.Salary.ToString("N0")</span></p>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" asp-action="save" asp-controller="instructor" class="needs-validation" novalidate>
+            <input asp-for="Id" type="hidden" />
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="form-floating mb-0">
+                        <input type="text" asp-for="Name" 
+                               class="form-control border-0 bg-light shadow-sm" 
+                               id="instructorName"
+                               placeholder="Enter instructor's full name" 
+                               required />
+                        <label for="instructorName" class="d-flex align-items-center gap-2">
+                            <i data-feather="user" class="text-primary" style="width: 16px; height: 16px;"></i>
+                            Instructor Name
+                        </label>
+                        <div class="invalid-feedback">Please enter instructor's name.</div>
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-floating mb-0">
+                        <input type="text" asp-for="Image" 
+                               class="form-control border-0 bg-light shadow-sm" 
+                               id="instructorImage"
+                               placeholder="Enter image filename" 
+                               required />
+                        <label for="instructorImage" class="d-flex align-items-center gap-2">
+                            <i data-feather="image" class="text-primary" style="width: 16px; height: 16px;"></i>
+                            Profile Image
+                        </label>
+                        <div class="invalid-feedback">Please provide an image filename.</div>
+                        <span asp-validation-for="Image" class="text-danger small"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-floating mb-0">
+                        <input type="number" asp-for="Salary" 
+                               class="form-control border-0 bg-light shadow-sm" 
+                               id="instructorSalary"
+                               placeholder="Enter monthly salary" 
+                               min="0" 
+                               required />
+                        <label for="instructorSalary" class="d-flex align-items-center gap-2">
+                            <i data-feather="dollar-sign" class="text-primary" style="width: 16px; height: 16px;"></i>
+                            Salary
+                        </label>
+                        <div class="invalid-feedback">Please enter a valid salary amount.</div>
+                        <span asp-validation-for="Salary" class="text-danger small"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-floating mb-0">
+                        <input type="text" asp-for="Address" 
+                               class="form-control border-0 bg-light shadow-sm" 
+                               id="instructorAddress"
+                               placeholder="Enter full address" 
+                               required />
+                        <label for="instructorAddress" class="d-flex align-items-center gap-2">
+                            <i data-feather="map-pin" class="text-primary" style="width: 16px; height: 16px;"></i>
+                            Address
+                        </label>
+                        <div class="invalid-feedback">Please enter the instructor's address.</div>
+                        <span asp-validation-for="Address" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-wrap gap-3 pt-3 border-top">
+                <button type="submit" class="btn btn-primary d-flex align-items-center gap-2 px-4 py-2">
+                    <i data-feather="save" style="width: 18px; height: 18px;"></i>
+                    Save Changes
+                </button>
+                
+                <a asp-action="Index" asp-controller="Instructor" class="btn btn-outline-secondary d-flex align-items-center gap-2 px-4 py-2">
+                    <i data-feather="arrow-left" style="width: 18px; height: 18px;"></i>
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Add form validation feedback
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '' && this.hasAttribute('required')) {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                } else {
+                    this.classList.add('is-valid');
+                    this.classList.remove('is-invalid');
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                this.classList.remove('is-invalid');
+            });
+        });
+        
+        // Initialize icons after page load
+        feather.replace();
+        
+        // Show unsaved changes warning
+        let formChanged = false;
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                formChanged = true;
+            });
+        });
+        
+        window.addEventListener('beforeunload', function(e) {
+            if (formChanged) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+        
+        // Remove warning when form is submitted
+        document.querySelector('form').addEventListener('submit', function() {
+            formChanged = false;
+        });
+        
+        // Bootstrap validation
+        (() => {
+          'use strict'
+          
+          // Fetch all forms we want to apply custom Bootstrap validation styles to
+          const forms = document.querySelectorAll('.needs-validation')
+        
+          // Loop over them and prevent submission
+          Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+              
+              form.classList.add('was-validated')
+            }, false)
+          })
+        })()
+    </script>
+}

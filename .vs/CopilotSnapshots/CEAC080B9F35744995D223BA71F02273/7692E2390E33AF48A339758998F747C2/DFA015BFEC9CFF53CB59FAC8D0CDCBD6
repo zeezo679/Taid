@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<partial name="HeaderPartial"/>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Header / Navbar -->
+    @Html.Partial("_NavPartial")
+
+    <!-- Main -->
+    <main role="main" class="flex-grow-1 container py-4">
+        <div class="page-content">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <partial name="_FooterPartial" />
+
+    <!-- jQuery (required for Bootstrap) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
+    <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Simple Page Script - NO LOADING ANIMATIONS -->
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                menu.classList.toggle('d-none');
+            }
+        }
+        
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        // Simple form submissions - NO LOADING ANIMATIONS
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                // No loading animations on form submit
+            });
+        });
+        
+        // Force dark theme application - NO TRANSITIONS
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply dark theme immediately
+            document.body.style.backgroundColor = 'var(--dark-primary)';
+            document.body.style.color = 'var(--text-primary)';
+            
+            // Add dark theme to Bootstrap components immediately
+            document.querySelectorAll('.modal-content, .dropdown-menu, .toast').forEach(element => {
+                element.style.backgroundColor = 'var(--dark-card)';
+                element.style.borderColor = 'var(--dark-accent)';
+                element.style.color = 'var(--text-primary)';
+            });
+
+            // Apply active state to current nav link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && currentPath.includes(href.split('/')[1])) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

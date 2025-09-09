@@ -1,0 +1,180 @@
+﻿@using Demo.Models.Entities
+@model List<Course>
+
+@{
+    var courses = Model;
+}
+
+<div class="container mx-auto px-4 py-10 animate-fade-in">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+        <div class="flex items-center gap-4">
+            <div class="p-4 bg-purple-100 rounded-xl shadow-md">
+                <i data-feather="book-open" class="w-8 h-8 text-purple-600"></i>
+            </div>
+            <div>
+                <h1 class="text-5xl font-extrabold text-gray-900 mb-1 tracking-tight">Courses</h1>
+                <p class="text-gray-500 text-lg">Manage and organize your educational courses</p>
+            </div>
+        </div>
+        <a asp-action="addCourse" asp-controller="Course" asp-route-id="" 
+           class="inline-flex items-center gap-3 px-7 py-3 bg-purple-700 text-white rounded-xl shadow-lg hover:bg-purple-800 transition-all duration-200 font-semibold text-lg">
+            <i data-feather="plus" class="w-5 h-5"></i>
+            Add New Course
+        </a>
+    </div>
+
+    <!-- Success Message -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-xl mb-8 shadow animate-slide-down" id="successMessage">
+            <div class="flex items-center gap-3">
+                <i data-feather="check-circle" class="w-5 h-5 text-green-600"></i>
+                @TempData["Message"]
+            </div>
+        </div>
+    }
+    @*AJAX Details*@
+    <div style="border:3px solid blue" id="CourseDetails">
+
+    </div>
+    <!-- Courses List -->
+    <div class="space-y-8">
+        @foreach(var course in courses)
+        {
+            <div class="flex items-stretch bg-white rounded-2xl border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden animate-scale-in">
+                <!-- Left Purple Banner -->
+                <div class="w-56 min-w-56 h-auto flex flex-col justify-between p-7 relative" style="background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white;">
+                    <div>
+                        <div class="text-xs font-semibold uppercase tracking-wide mb-4" style="color: rgba(255,255,255,0.85);">COURSE</div>
+                        <!-- Course Name in White Box -->
+                        <div class="bg-white rounded-lg p-4 mb-6">
+                            <h3 class="text-xl font-bold text-purple-700 leading-tight"><a onclick="GetData(@course.Id)">@course.Name</a></h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold uppercase tracking-wide mb-2" style="color: rgba(255,255,255,0.85);">DEPARTMENT</div>
+                        <div class="text-lg font-bold" style="color: white;">
+                            @course.Department.Name
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content -->
+                <div class="flex-1 p-7">
+                    <!-- Degree Section -->
+                    <div class="mb-6">
+                        <div class="text-sm text-gray-500 font-medium mb-2">Degree</div>
+                        <div class="bg-gray-50 rounded-lg px-4 py-3">
+                            <span class="text-2xl font-bold text-purple-700">@course.Degree</span>
+                        </div>
+                    </div>
+
+                    <!-- Min Degree Section -->
+                    <div class="mb-6">
+                        <div class="text-sm text-gray-500 font-medium mb-2">Min Degree</div>
+                        <div class="bg-gray-50 rounded-lg px-4 py-3">
+                            <span class="text-2xl font-bold text-purple-700">@course.MinDegree</span>
+                        </div>
+                    </div>
+
+                    <!-- Instructors Section -->
+                    <div class="mb-6">
+                        @{
+                            var instructors = (IEnumerable<dynamic>)ViewBag.Instructors;
+                            var filteredInstructors = instructors.Where(i => i.CourseId == course.Id);
+                            var theirCount = filteredInstructors.Count();
+                        }
+                        
+                        <div class="text-sm text-gray-500 font-medium mb-2">Instructors</div>
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="bg-gray-50 rounded-lg px-4 py-3 text-center min-w-16">
+                                <span class="text-xl font-bold text-gray-900">@theirCount</span>
+                            </div>
+                            <span class="text-gray-600 font-medium">Total</span>
+                        </div>
+                        
+                        @if (theirCount > 0)
+                        {
+                            <div class="space-y-2">
+                                @foreach(var instructor in filteredInstructors)
+                                {
+                                    <div class="text-sm text-gray-700">• @instructor.Name</div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-sm text-gray-400 italic">No instructors assigned</div>
+                        }
+                    </div>
+
+                    <!-- Edit Button -->
+                    <div class="flex justify-start">
+                        <a asp-action="edit" asp-controller="course" asp-route-id="@course.Id" 
+                           class="inline-flex items-center gap-2 px-6 py-3 bg-purple-700 text-white rounded-lg shadow-md hover:bg-purple-800 transition-all duration-200 font-semibold">
+                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                            Edit
+                        </a>
+                    </div>
+                    <div class="flex justify-start">
+                        <a asp-action="CourseDetails" asp-controller="course" asp-route-id="@course.Id"
+                           class="inline-flex items-center gap-2 px-6 py-3 bg-purple-700 text-white rounded-lg shadow-md hover:bg-purple-800 transition-all duration-200 font-semibold">
+                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                            View
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Empty State -->
+    @if (!courses.Any())
+    {
+        <div class="text-center py-16">
+            <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                <i data-feather="book-open" class="w-12 h-12 text-gray-400"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">No courses found</h3>
+            <p class="text-gray-500 mb-6">Get started by adding your first course to the system.</p>
+            <a asp-action="addCourse" asp-controller="Course" asp-route-id="" 
+               class="inline-flex items-center gap-3 px-7 py-3 bg-purple-700 text-white rounded-xl shadow-lg hover:bg-purple-800 transition-all duration-200 font-semibold text-lg">
+                <i data-feather="plus" class="w-5 h-5"></i>
+                Add Your First Course
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function GetData(id)
+        {
+            console.log(id);
+            event.preventDefault();
+
+            //ajax call
+            $.ajax({
+                url: "Course/AddCourse/"+id,
+                success: function(result)
+                {
+                    console.log(result);
+                    document.getElementById("CourseDetails").innerHTML = result;
+                }
+            })
+
+        }
+        // Initialize icons after page load
+        feather.replace();
+        
+        // Add staggered animations to course cards
+        const cards = document.querySelectorAll('.grid > div');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+        
+        
+        
+    </script>
+}

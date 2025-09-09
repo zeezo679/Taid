@@ -1,0 +1,24 @@
+﻿@using Demo.Models.Entities
+@model Course
+
+@{
+    var instructors = Model.Instructors;
+    var listItems = new SelectList(instructors, "Id", "Name");
+}
+    
+<div class="card" style="width: 18rem;">
+    <div class="card-body shadow-sm p-3 bg-body rounded">
+        <h5 class="card-title">@Model.Name</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">@Model.Degree</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">@Model.MinDegree</h6>
+        <select asp-items="listItems" class="form-select">
+            <option value="-1">View Instructors</option>
+        </select>
+    </div>
+</div>
+
+<script>
+    // Initialize feather icons for this partial
+    feather.replace();
+</script>
+

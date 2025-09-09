@@ -1,0 +1,11 @@
+﻿@using Demo.Models.Entities
+@model List<Course>
+@{
+    var listItems = new SelectList(Model, "Id", "Name");
+}
+
+
+@*styles wont apply unless you pass it as ajax or included a partial view of the header*@
+<select class="form-input" asp-items="listItems">
+    <option value="" disabled selected>View Courses</option>
+</select>

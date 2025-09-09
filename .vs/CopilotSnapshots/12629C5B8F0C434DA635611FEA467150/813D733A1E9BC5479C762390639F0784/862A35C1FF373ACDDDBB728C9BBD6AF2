@@ -1,0 +1,29 @@
+﻿<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Demo</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    
+    <!-- Simplified Button Hover Effects -->
+    <link rel="stylesheet" href="~/css/button-simplify.css" asp-append-version="true" />
+    
+    <!-- Simplified Input Focus Effects -->
+    <link rel="stylesheet" href="~/css/input-simplify.css" asp-append-version="true" />
+    
+    <!-- Label Positioning -->
+    <link rel="stylesheet" href="~/css/label-position.css" asp-append-version="true" />
+    
+    <!-- Navbar Animation Removal -->
+    <link rel="stylesheet" href="~/css/navbar-simplify.css" asp-append-version="true" />
+    
+    <!-- Floating Label Override (must be last) -->
+    <link rel="stylesheet" href="~/css/floating-label-override.css" asp-append-version="true" />
+
+    <!-- Add Feather Icons for better UI -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>

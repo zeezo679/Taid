@@ -1,0 +1,154 @@
+﻿@using Demo.Models.Entities
+@model Instructor
+
+<div class="card animate-scale-in">
+    <div class="card-header">
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-purple-100 rounded-xl">
+                <i data-feather="user-plus" class="icon text-purple-600"></i>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900">Add New Instructor</h2>
+                <p class="text-gray-600 text-lg">Fill in the details to add a new instructor to the system</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        <form method="post" asp-action="successAdd" asp-controller="instructor" class="space-y-8">
+            <input asp-for="Id" type="hidden" />
+            
+            <div class="grid gap-8 md:grid-cols-2">
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Name">
+                        <i data-feather="user" class="icon-sm text-purple-500"></i>
+                        Instructor Name
+                    </label>
+                    <input type="text" asp-for="Name" 
+                           class="form-input" 
+                           placeholder="Enter instructor's full name" 
+                           required />
+                    <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Image">
+                        <i data-feather="image" class="icon-sm text-purple-500"></i>
+                        Profile Image
+                    </label>
+                    <input type="text" asp-for="Image" 
+                           class="form-input" 
+                           placeholder="Enter image filename (e.g., instructor1.jpg)" 
+                           required />
+                    <span asp-validation-for="Image" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Salary">
+                        <i data-feather="dollar-sign" class="icon-sm text-purple-500"></i>
+                        Salary
+                    </label>
+                    <input type="number" asp-for="Salary" 
+                           class="form-input" 
+                           placeholder="Enter monthly salary" 
+                           min="0" 
+                           required />
+                    <span asp-validation-for="Salary" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Address">
+                        <i data-feather="map-pin" class="icon-sm text-purple-500"></i>
+                        Address
+                    </label>
+                    <input type="text" asp-for="Address" 
+                           class="form-input" 
+                           placeholder="Enter full address" 
+                           required />
+                    <span asp-validation-for="Address" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="CourseId">
+                        <i data-feather="book-open" class="icon-sm text-purple-500"></i>
+                        Course
+                    </label>
+                    <select asp-for="CourseId" class="form-input" required>
+                        <option value="" disabled selected>Select a course</option>
+                        @foreach(Course course in ViewBag.Courses)
+                        {
+                            <option value="@course.Id">@course.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CourseId" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="DeptId">
+                        <i data-feather="building" class="icon-sm text-purple-500"></i>
+                        Department
+                    </label>
+                    <select asp-for="DeptId" class="form-input" required onchange="ShowCourses(event.target.value)">
+                        <option value="" disabled selected>Select a department</option>
+                        @foreach (Department dept in ViewBag.Departments)
+                        {
+                            <option value="@dept.Id">@dept.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="DeptId" class="text-red-500 text-sm"></span>
+                </div>
+                <div class="form-group hide" id="CoursesPerDept" style="display:none;">
+                    <label class="form-label flex items-center gap-3">
+                        <i data-feather="building" class="icon-sm text-purple-500"></i>
+                        Courses in Department
+                    </label>
+                     <div id="selectContainer">
+
+                     </div> 
+                    <span class="text-red-500 text-sm"></span>
+                </div>
+            </div>
+            
+            <div class="flex gap-6 pt-8 border-t border-gray-200">
+                <button type="submit" class="btn-primary flex items-center gap-3 animate-pulse-hover">
+                    <i data-feather="plus" class="icon-sm"></i>
+                    Add Instructor
+                </button>
+                
+                <a asp-action="Index" asp-controller="Instructor" class="btn-secondary flex items-center gap-3 animate-pulse-hover">
+                    <i data-feather="arrow-left" class="icon-sm"></i>
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function ShowCourses(deptId)
+        {
+            console.log(deptId);
+            var container = document.getElementById("CoursesPerDept");
+            var selectContainer = document.getElementById("selectContainer");
+            console.log(container);
+            if(container.classList.contains("hide")){
+                container.classList.remove("hide");
+                container.style.display = "block";
+            }
+
+
+            $.ajax({
+                url: "showcoursesperdept/?deptId=" + deptId,
+                success: function(result) {
+                    console.log("Course details loaded successfully");
+                    
+                    console.log(result);
+                    selectContainer.innerHTML = result;
+                },                
+            });
+        }
+    </script>
+}

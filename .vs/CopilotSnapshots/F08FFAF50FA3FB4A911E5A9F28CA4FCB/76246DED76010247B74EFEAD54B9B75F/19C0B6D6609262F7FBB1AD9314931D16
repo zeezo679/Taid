@@ -1,0 +1,21 @@
+﻿<footer class="border-t bg-white text-gray-600 shadow-soft mt-12">
+    <div class="container mx-auto px-8 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <i data-feather="heart" class="icon-sm text-purple-500"></i>
+                <p>&copy; 2025 - Demo. Made with care.</p>
+            </div>
+            <div class="flex items-center gap-6">
+                <a class="hover:text-purple-600 transition-all duration-200 flex items-center gap-1"
+                   asp-area="" asp-controller="Home" asp-action="Privacy">
+                    <i data-feather="shield" class="icon-sm"></i>
+                    Privacy
+                </a>
+                <a href="#" class="hover:text-purple-600 transition-all duration-200 flex items-center gap-1">
+                    <i data-feather="mail" class="icon-sm"></i>
+                    Contact
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>

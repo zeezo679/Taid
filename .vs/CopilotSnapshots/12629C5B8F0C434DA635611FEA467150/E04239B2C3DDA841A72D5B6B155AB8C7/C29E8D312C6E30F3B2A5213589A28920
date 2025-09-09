@@ -1,0 +1,166 @@
+﻿@using Demo.Models.Entities
+@model Instructor
+
+<div class="card animate-scale-in">
+    <div class="card-header">
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-green-100 rounded-xl">
+                <i data-feather="edit-2" class="icon text-green-600"></i>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900">Edit Instructor</h2>
+                <p class="text-gray-600 text-lg">Update instructor information</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        <!-- Current Instructor Info -->
+        <div class="bg-purple-50 rounded-xl p-6 mb-8">
+            <div class="flex items-center gap-6">
+                <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center">
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="~/images/@Model.Image" 
+                             alt="@Model.Name" 
+                             class="w-full h-full object-cover rounded-full" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="w-full h-full flex items-center justify-center rounded-full" style="display: none;">
+                            <span class="font-bold text-purple-600 text-xl">@Model.Name.Substring(0, 1).ToUpper()</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <span class="font-bold text-purple-600 text-xl">@Model.Name.Substring(0, 1).ToUpper()</span>
+                    }
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-xl">@Model.Name</h3>
+                    <p class="text-gray-600 mt-1">ID: @Model.Id</p>
+                    <p class="text-gray-600">Current Salary: $@Model.Salary.ToString("N0")</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" asp-action="save" asp-controller="instructor" class="space-y-8">
+            <input asp-for="Id" type="hidden" />
+            
+            <div class="grid gap-8 md:grid-cols-2">
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Name">
+                        <i data-feather="user" class="icon-sm text-purple-500"></i>
+                        Instructor Name
+                    </label>
+                    <input type="text" asp-for="Name" 
+                           class="form-input" 
+                           placeholder="Enter instructor's full name" 
+                           required />
+                    <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Image">
+                        <i data-feather="image" class="icon-sm text-purple-500"></i>
+                        Profile Image
+                    </label>
+                    <input type="text" asp-for="Image" 
+                           class="form-input" 
+                           placeholder="Enter image filename (e.g., instructor1.jpg)" 
+                           required />
+                    <span asp-validation-for="Image" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Salary">
+                        <i data-feather="dollar-sign" class="icon-sm text-purple-500"></i>
+                        Salary
+                    </label>
+                    <input type="number" asp-for="Salary" 
+                           class="form-input" 
+                           placeholder="Enter monthly salary" 
+                           min="0" 
+                           required />
+                    <span asp-validation-for="Salary" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label flex items-center gap-3" asp-for="Address">
+                        <i data-feather="map-pin" class="icon-sm text-purple-500"></i>
+                        Address
+                    </label>
+                    <input type="text" asp-for="Address" 
+                           class="form-input" 
+                           placeholder="Enter full address" 
+                           required />
+                    <span asp-validation-for="Address" class="text-red-500 text-sm"></span>
+                </div>
+            </div>
+            
+            <div class="flex gap-6 pt-8 border-t border-gray-200">
+                <button type="submit" class="btn-primary flex items-center gap-3 animate-pulse-hover">
+                    <i data-feather="save" class="icon-sm"></i>
+                    Save Changes
+                </button>
+                
+                <a asp-action="Index" asp-controller="Instructor" class="btn-secondary flex items-center gap-3 animate-pulse-hover">
+                    <i data-feather="arrow-left" class="icon-sm"></i>
+                    Cancel
+                </a>
+                
+                <button type="button" onclick="resetForm()" class="bg-gray-100 text-gray-700 px-6 py-4 rounded-xl hover:bg-gray-200 transition-all duration-200 flex items-center gap-3">
+                    <i data-feather="refresh-cw" class="icon-sm"></i>
+                    Reset
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Add form validation feedback
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '' && this.hasAttribute('required')) {
+                    this.style.borderColor = '#ef4444';
+                } else {
+                    this.style.borderColor = '#10b981';
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#3b82f6';
+            });
+        });
+        
+        // Reset form function
+        function resetForm() {
+            if (confirm('Are you sure you want to reset all changes?')) {
+                location.reload();
+            }
+        }
+        
+        // Initialize icons after page load
+        feather.replace();
+        
+        // Show unsaved changes warning
+        let formChanged = false;
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', function() {
+                formChanged = true;
+            });
+        });
+        
+        window.addEventListener('beforeunload', function(e) {
+            if (formChanged) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+        
+        // Remove warning when form is submitted
+        document.querySelector('form').addEventListener('submit', function() {
+            formChanged = false;
+        });
+    </script>
+}

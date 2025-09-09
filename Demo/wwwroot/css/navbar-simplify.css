@@ -1,0 +1,101 @@
+/**
+ * Navbar Animation Removal
+ * This file removes all hover animations and transitions from navbar elements
+ */
+
+/* Remove nav-link animations */
+.nav-link {
+  transition: none !important;
+  transform: none !important;
+  overflow: visible !important;
+}
+
+.nav-link::before {
+  display: none !important;
+  content: none !important;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.nav-link.active {
+  transform: none !important;
+}
+
+/* Remove smooth-nav animations */
+.smooth-nav {
+  transition: none !important;
+  transform: none !important;
+}
+
+.smooth-nav::after {
+  display: none !important;
+  content: none !important;
+}
+
+.smooth-nav:hover,
+.smooth-nav:focus,
+.smooth-nav.active {
+  transform: none !important;
+  color: var(--text-primary) !important;
+}
+
+.smooth-nav i {
+  transition: none !important;
+}
+
+.smooth-nav:hover i {
+  transform: none !important;
+}
+
+/* Remove navbar-brand animations */
+.navbar-brand {
+  transition: none !important;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  color: var(--text-primary) !important;
+}
+
+/* Override mobile menu animations */
+@media (max-width: 991.98px) {
+  .smooth-nav::after {
+    display: none !important;
+    content: none !important;
+  }
+  
+  .smooth-nav:hover::after,
+  .smooth-nav.active::after {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+/* Replace hover color changes with static styles */
+.nav-link {
+  color: var(--text-secondary) !important;
+}
+
+.nav-link.active {
+  color: var(--accent-blue) !important;
+  font-weight: 500;
+}
+
+/* Keep navbar-toggler accessible but without animations */
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+/* Additional navbar animation overrides */
+.navbar * {
+  animation: none !important;
+}
+
+/* Footer links (often styled similar to navbar) */
+footer a {
+  transition: none !important;
+}
+
+footer a:hover {
+  color: var(--text-secondary) !important;
+}

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div style="background-color:aqua; height:200px">Header</div>
+    <div style="background-color:red; height:200px">Menu
+        <div>
+            @RenderSection("MenuSection");
+        </div>
+    </div>
+
+    <div>
+        @RenderBody()
+    </div>
+    <div style="background-color:aqua; height:200px">Footer</div>
+</body>
+@* <script>
+    feather.replace();
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('hidden');
+    }
+
+    // Add smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Add loading states for forms
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function() {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<div class="spinner mr-2"></div>Loading...';
+                submitBtn.disabled = true;
+            }
+        });
+    });
+</script> *@
+
+@RenderSection("Scripts",false);
+</html>

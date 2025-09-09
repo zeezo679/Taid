@@ -1,0 +1,54 @@
+/* Simplified Button Hover Effects
+   This file contains simplified button hover effects using Bootstrap utility classes
+   These styles override the more elaborate animations in site.css
+*/
+
+/* Remove the complex animation and positioning from buttons */
+.btn {
+  transition: all 0.2s ease !important;
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Remove the ::before pseudo-element that creates the circular animation */
+.btn::before {
+  display: none !important;
+}
+
+/* Simple hover effect for primary buttons */
+.btn-primary:hover,
+.btn-primary:focus {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 6px rgba(14, 165, 233, 0.25) !important;
+}
+
+/* Simple hover effect for secondary buttons */
+.btn-secondary:hover,
+.btn-secondary:focus {
+  transform: translateY(-1px) !important;
+  filter: brightness(1.05) !important;
+}
+
+/* Simple hover effect for outline buttons */
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Remove the animate-pulse-hover class effects */
+.animate-pulse-hover {
+  animation: none !important;
+}
+
+/* Alternative for animate-pulse-hover using simple transition */
+.animate-pulse-hover:hover {
+  transform: translateY(-1px) !important;
+}
+
+/* Override any transform styles on btn hover */
+.btn:hover {
+  transform: translateY(-1px) !important;
+}

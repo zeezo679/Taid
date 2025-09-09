@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<partial name="HeaderPartial"/>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Page Loading Overlay -->
+    @* <div class="page-loading" id="pageLoader">
+        <div class="page-loading-spinner"></div>
+    </div> *@
+
+    <!-- Navbar -->
+    <partial name="_NavPartial" />
+
+    <!-- Main -->
+    <main role="main" class="flex-grow-1 container py-4">
+        <div class="page-content">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <partial name="_FooterPartial" />
+
+    <!-- jQuery (required for Bootstrap) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
+    <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Page Transition Script -->
+    <script>
+        // Page Transition Manager
+        class PageTransitionManager {
+            constructor() {
+                this.loader = document.getElementById('pageLoader');
+                this.mainContent = document.querySelector('main[role="main"]');
+                this.initializeTransitions();
+                this.addNavigationListeners();
+            }
+
+            initializeTransitions() {
+                // Add transition classes to page elements
+                if (this.mainContent) {
+                    this.mainContent.classList.add('page-transition');
+                }
+
+                // Add stagger animation to cards
+                this.addStaggerAnimation();
+            }
+
+            addStaggerAnimation() {
+                const cards = document.querySelectorAll('.card');
+                cards.forEach((card, index) => {
+                    card.classList.add('stagger-animation');
+                    card.style.animationDelay = `${0.1 + (index * 0.1)}s`;
+                });
+            }
+
+            showLoader() {
+                if (this.loader) {
+                    this.loader.classList.add('active');
+                }
+            }
+
+            hideLoader() {
+                if (this.loader) {
+                    this.loader.classList.remove('active');
+                }
+            }
+
+            addNavigationListeners() {
+                // Add smooth transitions to navigation links
+                const navLinks = document.querySelectorAll('.nav-link[asp-controller], a[asp-controller]');
+                
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        // Only apply to internal navigation
+                        if (!link.getAttribute('href') || link.getAttribute('href').startsWith('#')) {
+                            return;
+                        }
+
+                        // Show loading animation
+                        this.showLoader();
+
+                        // Add a slight delay for visual effect
+                        setTimeout(() => {
+                            // Let the normal navigation proceed
+                        }, 100);
+                    });
+                });
+
+                // Handle browser back/forward buttons
+                window.addEventListener('popstate', () => {
+                    this.showLoader();
+                    setTimeout(() => this.hideLoader(), 300);
+                });
+            }
+
+            // Method to manually trigger page transition
+            transitionToPage(url) {
+                this.showLoader();
+                
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 200);
+            }
+        }
+
+        // Initialize page transitions when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const transitionManager = new PageTransitionManager();
+            
+            // Hide loader after page load
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    transitionManager.hideLoader();
+                }, 500);
+            });
+
+            // Apply active state to current nav link
+           
+        });
+
+        // Initialize Feather Icons
+        feather.replace();
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                menu.classList.toggle('d-none');
+            }
+        }
+        
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        // this caused a submt problem
+        // document.querySelectorAll('form').forEach(form => {
+        //     form.addEventListener('submit', function(e) {
+        //         const submitBtn = this.querySelector('button[type="submit"]');
+        //         if (submitBtn && this.checkValidity()) {
+        //             Show loading state with animation
+        //             submitBtn.innerHTML = '<div class="spinner-border spinner-border-sm me-2" role="status"></div>Loading...';
+        //             submitBtn.disabled = true;
+        //             submitBtn.style.transform = 'scale(0.98)';
+        //         }
+        //     });
+        // });
+        
+        // Force dark theme application with smooth transitions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure dark theme is applied with transitions
+            document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            document.body.style.backgroundColor = 'var(--dark-primary)';
+            document.body.style.color = 'var(--text-primary)';
+            
+            // Add dark theme class to all Bootstrap components with transitions
+            document.querySelectorAll('.modal-content, .dropdown-menu, .toast').forEach(element => {
+                element.style.transition = 'all 0.3s ease';
+                element.style.backgroundColor = 'var(--dark-card)';
+                element.style.borderColor = 'var(--dark-accent)';
+                element.style.color = 'var(--text-primary)';
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
